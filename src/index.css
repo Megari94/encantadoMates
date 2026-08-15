@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  /* Encantado Mates palette */
+  --color-cream: #F2EDE2;
+  --color-ink: #1A1815;
+  --color-olive: #6E775C;
+  --color-sage: #A7B58C;
+  --color-terracotta: #C47A5C;
+  --color-blush: #E7B9B2;
+
+  --font-display: "Bebas Neue", "Archivo Expanded", sans-serif;
+  --font-body: "Work Sans", "Inter", sans-serif;
+
+  --shadow-warm: 0 12px 32px -8px rgb(196 122 92 / 0.35);
+  --shadow-warm-lg: 0 24px 56px -12px rgb(26 24 21 / 0.28);
+
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Subtle grain/noise overlay across the whole page so the cream field never reads flat/digital */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+#root {
+  position: relative;
+  z-index: 2;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+}
+
+/* Liquid glass surface used by the cart panel and admin login */
+.glass {
+  background: rgb(242 237 226 / 0.55);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.4);
+}
+
+.glass-dark {
+  background: rgb(26 24 21 / 0.45);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.15);
+}
+
+/* Organic wood/stone texture used behind product photography */
+.bg-wood {
+  background-color: #cbb89a;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(110 119 92 / 0.12), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgb(196 122 92 / 0.12), transparent 45%),
+    repeating-linear-gradient(95deg, rgb(26 24 21 / 0.06) 0px, transparent 2px, transparent 14px, rgb(26 24 21 / 0.04) 16px);
+}
+
+::selection {
+  background: var(--color-terracotta);
+  color: var(--color-cream);
+}
+
+/* Scrollbar tuned to the warm palette */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgb(110 119 92 / 0.4); border-radius: 999px; }
