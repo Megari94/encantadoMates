@@ -8,13 +8,11 @@ const NAV_LINKS = [
   { href: '#contacto', label: 'Contacto' },
 ]
 
-const INFO_ITEMS = ['Envíos y entregas', 'Cuidados del mate', 'Preguntas frecuentes']
-
 export default function Footer() {
   return (
     <footer className="bg-olive-dark text-cream">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-10 px-5 py-14 sm:px-8 lg:grid-cols-4">
-        <div className="col-span-2 lg:col-span-1">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-3 sm:px-8">
+        <div>
           <Logo height="h-11" className="brightness-0 invert" />
           <p className="mt-4 font-body text-sm text-cream/60">
             Resistencia, Chaco, Argentina
@@ -40,21 +38,11 @@ export default function Footer() {
 
         <div>
           <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-cream/50">
-            Información
+            Hablemos
           </h4>
-          <ul className="mt-4 flex flex-col gap-2.5">
-            {INFO_ITEMS.map((item) => (
-              <li key={item} className="font-body text-sm text-cream/75">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-cream/50">
-            Seguinos
-          </h4>
+          <p className="mt-4 max-w-xs font-body text-sm text-cream/65">
+            ¿Tenés una consulta sobre productos, entregas o cuidados? Escribinos directamente.
+          </p>
           <div className="mt-4 flex gap-3">
             <a
               href="https://www.instagram.com/encantadomates/"
