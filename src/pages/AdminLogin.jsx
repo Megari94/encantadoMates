@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import Logo from '../components/Logo.jsx'
 
@@ -83,6 +83,22 @@ export default function AdminLogin() {
             {loading ? 'Ingresando…' : 'Ingresar'}
           </button>
         </form>
+
+        <div className="my-5 flex items-center gap-3" aria-hidden="true">
+          <span className="h-px flex-1 bg-ink/10" />
+          <span className="font-body text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/35">o</span>
+          <span className="h-px flex-1 bg-ink/10" />
+        </div>
+
+        <Link
+          to="/"
+          className="flex w-full items-center justify-center gap-2 rounded-full border border-ink/20 bg-white/25 px-6 py-3 font-body text-sm font-semibold uppercase tracking-wide text-ink/75 transition-all duration-300 hover:-translate-y-0.5 hover:border-olive hover:bg-white/55"
+        >
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M19 12H5M11 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Ir al sitio
+        </Link>
       </div>
     </div>
   )
