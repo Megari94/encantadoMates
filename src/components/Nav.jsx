@@ -26,12 +26,12 @@ export default function Nav() {
           <Logo height="h-9 sm:h-10" />
         </a>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden items-center gap-4 lg:gap-7 md:flex">
           {LINKS.map((link) => (
             <a
               key={link.id}
               href={`#${link.id}`}
-              className={`relative font-body text-sm font-semibold uppercase tracking-wide transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:bg-terracotta after:transition-all ${
+              className={`relative font-body text-xs font-semibold uppercase tracking-wide transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:bg-terracotta after:transition-all lg:text-sm ${
                 active === link.id
                   ? 'text-terracotta after:w-full'
                   : 'text-ink/70 after:w-0 hover:text-ink'

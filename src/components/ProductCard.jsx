@@ -19,8 +19,8 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    <article className="group flex flex-col">
-      <div className="bg-wood relative aspect-[4/5] overflow-hidden rounded-[28px] shadow-sm">
+    <article className="group flex flex-col transition-transform duration-500 hover:-translate-y-2">
+      <div className="bg-wood relative aspect-[4/5] overflow-hidden rounded-[30px] shadow-[0_22px_55px_-30px_rgba(26,24,21,.65)] ring-1 ring-white/70 transition-shadow duration-500 group-hover:shadow-[0_34px_70px_-28px_rgba(26,24,21,.72)]">
         {product.image_url ? (
           <img
             src={product.image_url}
@@ -42,7 +42,7 @@ export default function ProductCard({ product }) {
         )}
       </div>
 
-      <div className="relative -mt-7 mx-3 flex items-center justify-between gap-3 rounded-2xl bg-white px-4 py-3 shadow-md ring-1 ring-ink/5">
+      <div className="relative -mt-7 mx-3 flex items-center justify-between gap-3 rounded-[20px] border border-white/80 bg-white/90 px-4 py-3.5 shadow-[0_18px_40px_-22px_rgba(26,24,21,.6),inset_0_1px_0_white] backdrop-blur-xl transition-shadow duration-500 group-hover:shadow-[0_24px_48px_-20px_rgba(26,24,21,.65)]">
         <div className="min-w-0">
           <h3 className="truncate font-body text-sm font-semibold sm:text-base">{product.name}</h3>
           <p className="truncate font-body text-xs text-ink/50">

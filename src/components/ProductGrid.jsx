@@ -51,7 +51,8 @@ export default function ProductGrid() {
   const hasMore = visibleCount < filtered.length
 
   return (
-    <section id="productos" className="section-anchor mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+    <section id="productos" className="section-anchor section-pattern relative px-5 py-16 sm:px-8 sm:py-24">
+      <div className="relative z-10 mx-auto max-w-6xl">
       <Reveal className="mb-10 text-center">
         <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-olive">
           Catálogo
@@ -103,7 +104,7 @@ export default function ProductGrid() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por nombre…"
-            className="w-full rounded-full border border-ink/15 bg-white/70 py-2.5 pl-10 pr-4 font-body text-sm outline-none transition-colors focus:border-olive"
+            className="w-full rounded-full border border-ink/10 bg-white/70 py-3 pl-10 pr-4 font-body text-sm shadow-[0_10px_30px_-22px_rgba(26,24,21,.5),inset_0_1px_0_rgba(255,255,255,.9)] outline-none backdrop-blur-sm transition-all focus:border-olive focus:bg-white focus:shadow-[0_14px_35px_-20px_rgba(51,54,31,.55)]"
           />
         </div>
       </Reveal>
@@ -157,6 +158,7 @@ export default function ProductGrid() {
           )}
         </>
       )}
+      </div>
     </section>
   )
 }

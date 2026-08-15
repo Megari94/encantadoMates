@@ -27,7 +27,7 @@ const VALUES = [
 
 export default function AboutValues() {
   return (
-    <section id="nosotros" className="section-anchor bg-olive-dark px-5 py-16 text-cream sm:px-8 sm:py-24">
+    <section id="nosotros" className="section-anchor olive-glow relative overflow-hidden px-5 py-16 text-cream sm:px-8 sm:py-24">
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_0.85fr]">
         <Reveal className="text-center lg:text-left">
           <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-sage">
@@ -44,16 +44,18 @@ export default function AboutValues() {
           </p>
         </Reveal>
 
-        <Reveal delay={150} className="relative mx-auto aspect-square w-full max-w-sm">
-          <div className="blob-mask h-full w-full overflow-hidden">
-            <img src="/artisan-hands.jpg" alt="Artesano puliendo un mate a mano" className="h-full w-full object-cover" />
+        <Reveal delay={150} className="relative mx-auto aspect-square w-full max-w-md">
+          <div className="blob-mask photo-depth h-full w-full overflow-hidden ring-1 ring-white/15">
+            <img src="/artisan-hands.jpg" alt="Artesano puliendo un mate a mano" className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
           </div>
+          <span className="absolute -bottom-5 -left-4 h-28 w-28 rounded-full border border-sage/20" />
+          <span className="absolute -right-7 top-6 h-20 w-20 rounded-full bg-terracotta/15 blur-2xl" />
         </Reveal>
       </div>
 
       <div className="mx-auto mt-14 grid max-w-6xl grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
         {VALUES.map((value, i) => (
-          <Reveal key={value.title} delay={i * 90} className="rounded-2xl bg-sage p-5 text-ink sm:p-6">
+          <Reveal key={value.title} delay={i * 90} className="surface-card rounded-[24px] bg-gradient-to-br from-sage to-[#c7cfb7] p-5 text-ink sm:p-6">
             <svg viewBox="0 0 24 24" className="h-7 w-7 text-olive-dark" fill="none" stroke="currentColor" strokeWidth="1.6">
               {value.icon}
             </svg>
