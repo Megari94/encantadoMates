@@ -8,6 +8,7 @@
   --color-sage: #A7B58C;
   --color-terracotta: #C47A5C;
   --color-blush: #E7B9B2;
+  --color-olive-dark: #33361F;
 
   --font-display: "Bebas Neue", "Archivo Expanded", sans-serif;
   --font-body: "Work Sans", "Inter", sans-serif;
@@ -83,6 +84,31 @@ body::before {
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid rgb(255 255 255 / 0.15);
+}
+
+/* Small rotated-square accent used under section headings */
+.divider-diamond {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  transform: rotate(45deg);
+  background: var(--color-terracotta);
+}
+
+/* Organic blob mask for the "Nosotros" portrait — scales with the element, unlike a fixed SVG path */
+.blob-mask {
+  border-radius: 62% 38% 55% 45% / 45% 55% 45% 55%;
+}
+
+/* Hero photo blends into the cream background on larger screens; full-bleed on mobile */
+.hero-photo-mask {
+  mask-image: none;
+}
+@media (min-width: 1024px) {
+  .hero-photo-mask {
+    mask-image: linear-gradient(to right, transparent 0%, black 22%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 22%);
+  }
 }
 
 /* Organic wood/stone texture used behind product photography */

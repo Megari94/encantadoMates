@@ -8,7 +8,7 @@ export default function CartButton() {
       type="button"
       onClick={toggleCart}
       aria-label="Abrir carrito"
-      className="relative flex h-11 w-11 items-center justify-center rounded-full bg-ink text-cream shadow-warm transition-transform hover:scale-105 active:scale-95"
+      className="relative flex h-11 w-11 items-center justify-center rounded-full bg-olive text-cream shadow-warm transition-transform hover:scale-105 active:scale-95"
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M4 7h1.5l1.6 9.6a2 2 0 0 0 2 1.7h7.4a2 2 0 0 0 2-1.6L20 9H7" strokeLinecap="round" strokeLinejoin="round" />

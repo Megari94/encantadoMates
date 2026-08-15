@@ -3,12 +3,15 @@ import { supabase, PRODUCTS_TABLE, PRODUCT_CATEGORIES } from '../lib/supabaseCli
 import ProductCard from './ProductCard.jsx'
 import Reveal from './Reveal.jsx'
 
+const PAGE_SIZE = 6
+
 export default function ProductGrid() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [category, setCategory] = useState('todos')
   const [search, setSearch] = useState('')
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
   useEffect(() => {
     let active = true
@@ -40,26 +43,36 @@ export default function ProductGrid() {
     })
   }, [products, category, search])
 
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE)
+  }, [category, search])
+
+  const visible = filtered.slice(0, visibleCount)
+  const hasMore = visibleCount < filtered.length
+
   return (
     <section id="productos" className="section-anchor mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
       <Reveal className="mb-10 text-center">
-        <span className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-olive">
+        <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-olive">
           Catálogo
         </span>
         <h2 className="font-display mt-3 text-4xl sm:text-5xl">NUESTROS PRODUCTOS</h2>
-        <p className="mx-auto mt-3 max-w-md font-body text-ink/60">
+        <span className="divider-diamond mx-auto my-5" />
+        <p className="mx-auto max-w-md font-body text-ink/60">
           Piezas únicas, torneadas y curadas a mano. El stock se actualiza en
           tiempo real.
         </p>
       </Reveal>
 
-      <Reveal delay={100} className="mb-8 flex flex-col items-center gap-4">
+      <Reveal delay={100} className="mb-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
         <div className="flex flex-wrap justify-center gap-2">
           <button
             type="button"
             onClick={() => setCategory('todos')}
             className={`rounded-full px-4 py-2 font-body text-sm font-semibold transition-colors ${
-              category === 'todos' ? 'bg-ink text-cream' : 'bg-ink/5 text-ink/70 hover:bg-ink/10'
+              category === 'todos'
+                ? 'bg-olive-dark text-cream'
+                : 'border border-ink/15 text-ink/70 hover:border-ink/30'
             }`}
           >
             Todos
@@ -70,7 +83,9 @@ export default function ProductGrid() {
               type="button"
               onClick={() => setCategory(cat.value)}
               className={`rounded-full px-4 py-2 font-body text-sm font-semibold transition-colors ${
-                category === cat.value ? 'bg-ink text-cream' : 'bg-ink/5 text-ink/70 hover:bg-ink/10'
+                category === cat.value
+                  ? 'bg-olive-dark text-cream'
+                  : 'border border-ink/15 text-ink/70 hover:border-ink/30'
               }`}
             >
               {cat.label}
@@ -88,15 +103,15 @@ export default function ProductGrid() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por nombre…"
-            className="w-full rounded-full border border-ink/15 bg-white/60 py-2.5 pl-10 pr-4 font-body text-sm outline-none transition-colors focus:border-olive"
+            className="w-full rounded-full border border-ink/15 bg-white/70 py-2.5 pl-10 pr-4 font-body text-sm outline-none transition-colors focus:border-olive"
           />
         </div>
       </Reveal>
 
       {loading && (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="aspect-[3/4] animate-pulse rounded-[28px] bg-ink/5" />
+            <div key={i} className="aspect-[4/5] animate-pulse rounded-[28px] bg-ink/5" />
           ))}
         </div>
       )}
@@ -119,14 +134,28 @@ export default function ProductGrid() {
         </p>
       )}
 
-      {!loading && !error && filtered.length > 0 && (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((product, i) => (
-            <Reveal key={product.id} delay={(i % 3) * 90}>
-              <ProductCard product={product} />
-            </Reveal>
-          ))}
-        </div>
+      {!loading && !error && visible.length > 0 && (
+        <>
+          <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {visible.map((product, i) => (
+              <Reveal key={product.id} delay={(i % 3) * 90}>
+                <ProductCard product={product} />
+              </Reveal>
+            ))}
+          </div>
+
+          {hasMore && (
+            <div className="mt-10 text-center">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
+                className="rounded-full bg-terracotta px-7 py-3 font-body text-sm font-semibold uppercase tracking-wide text-cream shadow-warm transition-transform hover:scale-105 active:scale-95"
+              >
+                Ver catálogo completo
+              </button>
+            </div>
+          )}
+        </>
       )}
     </section>
   )

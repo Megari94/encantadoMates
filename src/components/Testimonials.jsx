@@ -48,7 +48,8 @@ export default function Testimonials() {
             Clientes
           </span>
           <h2 className="font-display mt-3 text-4xl sm:text-5xl">LO QUE DICEN</h2>
-          <p className="mt-3 font-body text-ink/60">
+          <span className="divider-diamond mx-auto my-5" />
+          <p className="font-body text-ink/60">
             Algunas palabras de quienes ya tienen su mate de Encantado Mates.
           </p>
         </Reveal>
