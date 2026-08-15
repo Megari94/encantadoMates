@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase, PRODUCTS_TABLE } from '../lib/supabaseClient.js'
+import { supabase, PRODUCTS_TABLE, CATEGORIES_TABLE } from '../lib/supabaseClient.js'
 import { useAuth } from '../context/AuthContext.jsx'
 import Logo from '../components/Logo.jsx'
 import ProductForm from '../admin/ProductForm.jsx'
 import ProductTable from '../admin/ProductTable.jsx'
+import CategoryManager from '../admin/CategoryManager.jsx'
 
 export default function AdminDashboard() {
   const { signOut } = useAuth()
   const navigate = useNavigate()
   const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [loadingProducts, setLoadingProducts] = useState(true)
   const [editingProduct, setEditingProduct] = useState(null)
   const [showProductForm, setShowProductForm] = useState(false)
+  const [showCategoryManager, setShowCategoryManager] = useState(false)
 
   async function fetchProducts() {
     setLoadingProducts(true)
@@ -24,8 +27,14 @@ export default function AdminDashboard() {
     setLoadingProducts(false)
   }
 
+  async function fetchCategories() {
+    const { data } = await supabase.from(CATEGORIES_TABLE).select('*').order('sort_order')
+    setCategories(data ?? [])
+  }
+
   useEffect(() => {
     fetchProducts()
+    fetchCategories()
   }, [])
 
   async function handleToggleStock(product) {
@@ -77,16 +86,26 @@ export default function AdminDashboard() {
             <h1 className="font-display mt-1 text-3xl text-olive-dark">PRODUCTOS</h1>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              setEditingProduct(null)
-              setShowProductForm(true)
-            }}
-            className="rounded-full bg-terracotta px-5 py-2.5 font-body text-sm font-semibold uppercase tracking-wide text-cream shadow-warm transition-transform hover:scale-105 active:scale-95"
-          >
-            + Nuevo producto
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setShowCategoryManager(true)}
+              className="rounded-full border border-ink/15 bg-white/40 px-5 py-2.5 font-body text-sm font-semibold uppercase tracking-wide text-ink/65 transition-colors hover:border-olive hover:text-olive"
+            >
+              Gestionar categorías
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setEditingProduct(null)
+                setShowProductForm(true)
+              }}
+              disabled={categories.length === 0}
+              className="rounded-full bg-terracotta px-5 py-2.5 font-body text-sm font-semibold uppercase tracking-wide text-cream shadow-warm transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              + Nuevo producto
+            </button>
+          </div>
         </div>
 
         {loadingProducts ? (
@@ -98,6 +117,7 @@ export default function AdminDashboard() {
         ) : (
           <ProductTable
             products={products}
+            categories={categories}
             onEdit={(p) => {
               setEditingProduct(p)
               setShowProductForm(true)
@@ -111,11 +131,21 @@ export default function AdminDashboard() {
       {showProductForm && (
         <ProductForm
           product={editingProduct}
+          categories={categories}
           onClose={() => setShowProductForm(false)}
           onSaved={() => {
             setShowProductForm(false)
             fetchProducts()
           }}
+        />
+      )}
+
+      {showCategoryManager && (
+        <CategoryManager
+          categories={categories}
+          products={products}
+          onClose={() => setShowCategoryManager(false)}
+          onChanged={fetchCategories}
         />
       )}
     </div>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { supabase, PRODUCTS_TABLE, PRODUCT_CATEGORIES } from '../lib/supabaseClient.js'
+import { supabase, PRODUCTS_TABLE, CATEGORIES_TABLE } from '../lib/supabaseClient.js'
 import ProductCard from './ProductCard.jsx'
 import Reveal from './Reveal.jsx'
 
@@ -7,6 +7,7 @@ const PAGE_SIZE = 6
 
 export default function ProductGrid() {
   const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [category, setCategory] = useState('todos')
@@ -18,14 +19,17 @@ export default function ProductGrid() {
 
     async function fetchProducts() {
       setLoading(true)
-      const { data, error } = await supabase
-        .from(PRODUCTS_TABLE)
-        .select('*')
-        .order('created_at', { ascending: false })
+      const [{ data, error }, { data: categoryData, error: categoryError }] = await Promise.all([
+        supabase.from(PRODUCTS_TABLE).select('*').order('created_at', { ascending: false }),
+        supabase.from(CATEGORIES_TABLE).select('*').eq('active', true).order('sort_order'),
+      ])
 
       if (!active) return
-      if (error) setError(error.message)
-      else setProducts(data ?? [])
+      if (error || categoryError) setError(error?.message ?? categoryError.message)
+      else {
+        setProducts(data ?? [])
+        setCategories(categoryData ?? [])
+      }
       setLoading(false)
     }
 
@@ -78,18 +82,18 @@ export default function ProductGrid() {
           >
             Todos
           </button>
-          {PRODUCT_CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <button
-              key={cat.value}
+              key={cat.id}
               type="button"
-              onClick={() => setCategory(cat.value)}
+              onClick={() => setCategory(cat.slug)}
               className={`rounded-full px-4 py-2 font-body text-sm font-semibold transition-colors ${
-                category === cat.value
+                category === cat.slug
                   ? 'bg-olive-dark text-cream'
                   : 'border border-ink/15 text-ink/70 hover:border-ink/30'
               }`}
             >
-              {cat.label}
+              {cat.name}
             </button>
           ))}
         </div>
@@ -140,7 +144,10 @@ export default function ProductGrid() {
           <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {visible.map((product, i) => (
               <Reveal key={product.id} delay={(i % 3) * 90}>
-                <ProductCard product={product} />
+                <ProductCard
+                  product={product}
+                  categoryLabel={categories.find((cat) => cat.slug === product.category)?.name}
+                />
               </Reveal>
             ))}
           </div>

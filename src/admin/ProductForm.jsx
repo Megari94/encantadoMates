@@ -1,17 +1,17 @@
 import { useState } from 'react'
-import { supabase, PRODUCTS_TABLE, PRODUCT_IMAGES_BUCKET, PRODUCT_CATEGORIES } from '../lib/supabaseClient.js'
+import { supabase, PRODUCTS_TABLE, PRODUCT_IMAGES_BUCKET } from '../lib/supabaseClient.js'
 
 const emptyForm = {
   name: '',
   description: '',
   price: '',
   stock: '',
-  category: PRODUCT_CATEGORIES[0].value,
+  category: '',
   in_stock: true,
   image_url: '',
 }
 
-export default function ProductForm({ product, onClose, onSaved }) {
+export default function ProductForm({ product, categories, onClose, onSaved }) {
   const isEditing = Boolean(product)
   const [form, setForm] = useState(
     product
@@ -20,11 +20,11 @@ export default function ProductForm({ product, onClose, onSaved }) {
           description: product.description ?? '',
           price: product.price,
           stock: product.stock,
-          category: product.category ?? PRODUCT_CATEGORIES[0].value,
+          category: product.category ?? categories[0]?.slug ?? '',
           in_stock: product.in_stock,
           image_url: product.image_url ?? '',
         }
-      : emptyForm
+      : { ...emptyForm, category: categories[0]?.slug ?? '' }
   )
   const [imageFile, setImageFile] = useState(null)
   const [preview, setPreview] = useState(product?.image_url ?? null)
@@ -146,9 +146,9 @@ export default function ProductForm({ product, onClose, onSaved }) {
               onChange={(e) => setForm({ ...form, category: e.target.value })}
               className="w-full rounded-xl border border-ink/15 bg-white/50 px-4 py-2.5 font-body text-sm outline-none focus:border-olive"
             >
-              {PRODUCT_CATEGORIES.map((cat) => (
-                <option key={cat.value} value={cat.value}>
-                  {cat.label}
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.slug}>
+                  {cat.name}{cat.active ? '' : ' (oculta)'}
                 </option>
               ))}
             </select>
@@ -209,7 +209,7 @@ export default function ProductForm({ product, onClose, onSaved }) {
             </button>
             <button
               type="submit"
-              disabled={saving}
+              disabled={saving || categories.length === 0}
               className="flex-1 rounded-full bg-ink px-5 py-2.5 font-body text-sm font-semibold text-cream shadow-warm transition-transform hover:scale-[1.02] active:scale-95 disabled:opacity-60"
             >
               {saving ? 'Guardando…' : 'Guardar'}

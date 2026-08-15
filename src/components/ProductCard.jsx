@@ -1,11 +1,8 @@
 import { useState } from 'react'
 import { useCart } from '../context/CartContext.jsx'
 import { formatPrice } from '../lib/whatsapp.js'
-import { PRODUCT_CATEGORIES } from '../lib/supabaseClient.js'
 
-const CATEGORY_LABELS = Object.fromEntries(PRODUCT_CATEGORIES.map((c) => [c.value, c.label]))
-
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, categoryLabel }) {
   const { addItem } = useCart()
   const [justAdded, setJustAdded] = useState(false)
 
@@ -46,7 +43,7 @@ export default function ProductCard({ product }) {
         <div className="min-w-0">
           <h3 className="truncate font-body text-sm font-semibold sm:text-base">{product.name}</h3>
           <p className="truncate font-body text-xs text-ink/50">
-            {CATEGORY_LABELS[product.category] ?? product.category}
+            {categoryLabel ?? product.category}
           </p>
         </div>
 
