@@ -14,3 +14,11 @@ export const supabase = createClient(supabaseUrl ?? '', supabaseAnonKey ?? '')
 
 export const PRODUCTS_TABLE = 'products'
 export const PRODUCT_IMAGES_BUCKET = 'product-images'
+export const TESTIMONIALS_TABLE = 'testimonials'
+
+export const PRODUCT_CATEGORIES = [
+  { value: 'mate', label: 'Mates' },
+  { value: 'termo', label: 'Termos' },
+  { value: 'bombilla', label: 'Bombillas' },
+  { value: 'accesorio', label: 'Accesorios' },
+]

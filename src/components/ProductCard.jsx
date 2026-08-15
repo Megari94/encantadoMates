@@ -28,7 +28,7 @@ export default function ProductCard({ product }) {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <img src="/logo-mark.svg" alt="" className="h-20 w-20 opacity-40" />
+            <img src="/logo-mark.png" alt="" className="h-20 w-20 opacity-40" />
           </div>
         )}
 

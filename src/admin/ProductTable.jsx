@@ -1,4 +1,7 @@
 import { formatPrice } from '../lib/whatsapp.js'
+import { PRODUCT_CATEGORIES } from '../lib/supabaseClient.js'
+
+const CATEGORY_LABELS = Object.fromEntries(PRODUCT_CATEGORIES.map((c) => [c.value, c.label]))
 
 export default function ProductTable({ products, onEdit, onDelete, onToggleStock }) {
   if (products.length === 0) {
@@ -34,8 +37,9 @@ export default function ProductTable({ products, onEdit, onDelete, onToggleStock
 
             <div className="min-w-0">
               <p className="truncate font-body text-sm font-semibold">{product.name}</p>
-              <p className="truncate font-body text-xs text-ink/50 sm:hidden">
-                {formatPrice(product.price)} · {product.stock} u.
+              <p className="truncate font-body text-xs text-ink/50">
+                {CATEGORY_LABELS[product.category] ?? product.category}
+                <span className="sm:hidden"> · {formatPrice(product.price)} · {product.stock} u.</span>
               </p>
             </div>
 

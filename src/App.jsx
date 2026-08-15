@@ -2,9 +2,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { CartProvider } from './context/CartContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
-import Header from './components/Header.jsx'
+import Nav from './components/Nav.jsx'
 import Footer from './components/Footer.jsx'
 import CartPanel from './components/CartPanel.jsx'
+import WhatsAppFAB from './components/WhatsAppFAB.jsx'
 import Home from './pages/Home.jsx'
 import AdminLogin from './pages/AdminLogin.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
@@ -12,10 +13,11 @@ import AdminDashboard from './pages/AdminDashboard.jsx'
 function StoreLayout({ children }) {
   return (
     <>
-      <Header />
+      <Nav />
       {children}
       <Footer />
       <CartPanel />
+      <WhatsAppFAB />
     </>
   )
 }

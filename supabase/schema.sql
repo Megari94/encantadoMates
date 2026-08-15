@@ -9,6 +9,7 @@ create table if not exists public.products (
   description text not null default '',
   price numeric(10, 2) not null default 0 check (price >= 0),
   stock integer not null default 0 check (stock >= 0),
+  category text not null default 'mate' check (category in ('mate', 'termo', 'bombilla', 'accesorio')),
   image_url text,
   in_stock boolean not null default true,
   created_at timestamptz not null default now(),
@@ -88,7 +89,43 @@ create policy "Solo admins borran fotos"
   to authenticated
   using (bucket_id = 'product-images');
 
--- 4) Usuario admin -------------------------------------------------------------
+-- 4) Testimonios de clientes --------------------------------------------------
+
+create table if not exists public.testimonials (
+  id uuid primary key default gen_random_uuid(),
+  customer_name text not null,
+  quote text not null,
+  rating smallint not null default 5 check (rating between 1 and 5),
+  created_at timestamptz not null default now()
+);
+
+alter table public.testimonials enable row level security;
+
+drop policy if exists "Testimonios visibles para todos" on public.testimonials;
+create policy "Testimonios visibles para todos"
+  on public.testimonials for select
+  using (true);
+
+drop policy if exists "Solo admins escriben testimonios" on public.testimonials;
+create policy "Solo admins escriben testimonios"
+  on public.testimonials for insert
+  to authenticated
+  with check (true);
+
+drop policy if exists "Solo admins actualizan testimonios" on public.testimonials;
+create policy "Solo admins actualizan testimonios"
+  on public.testimonials for update
+  to authenticated
+  using (true)
+  with check (true);
+
+drop policy if exists "Solo admins borran testimonios" on public.testimonials;
+create policy "Solo admins borran testimonios"
+  on public.testimonials for delete
+  to authenticated
+  using (true);
+
+-- 5) Usuario admin -------------------------------------------------------------
 -- Creá el usuario admin desde Authentication > Users > Add user en el dashboard
 -- de Supabase (con email + contraseña). No hace falta ninguna tabla extra: el
 -- login del panel /admin usa Supabase Auth directamente contra ese usuario.

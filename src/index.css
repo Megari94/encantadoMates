@@ -36,14 +36,14 @@ body {
   min-height: 100vh;
 }
 
-/* Subtle grain/noise overlay across the whole page so the cream field never reads flat/digital */
+/* Very subtle grain so the cream field never reads flat/digital — kept faint for a cleaner, modern feel */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.15;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
@@ -56,6 +56,18 @@ body::before {
 .font-display {
   font-family: var(--font-display);
   letter-spacing: 0.06em;
+}
+
+/* Anchor sections sit under the sticky nav, so offset the scroll target */
+.section-anchor {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Solid, crisp nav surface — a lighter touch than full liquid glass */
+.nav-surface {
+  background: rgb(242 237 226 / 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* Liquid glass surface used by the cart panel and admin login */

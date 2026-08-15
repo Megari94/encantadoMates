@@ -16,10 +16,17 @@ backend, pedidos que se cierran por WhatsApp.
 1. Creá un proyecto en [supabase.com](https://supabase.com).
 2. Andá a **SQL Editor** y ejecutá el contenido de [`supabase/schema.sql`](supabase/schema.sql).
    Esto crea:
-   - la tabla `products` (nombre, descripción, precio, stock, imagen, `in_stock`)
+   - la tabla `products` (nombre, descripción, precio, stock, categoría,
+     imagen, `in_stock`)
+   - la tabla `testimonials` (nombre, testimonio, puntaje)
    - las políticas de Row Level Security (lectura pública, escritura solo
      para usuarios autenticados)
    - el bucket público de Storage `product-images` con sus políticas
+   - **Si tu proyecto ya existía** (ya habías corrido una versión anterior de
+     `schema.sql`), en cambio ejecutá
+     [`supabase/migrations/002_redesign.sql`](supabase/migrations/002_redesign.sql),
+     que agrega solo lo nuevo (categoría de producto + tabla de testimonios)
+     sin tocar lo que ya tenías.
 3. Andá a **Authentication → Users → Add user** y creá el usuario admin
    (email + contraseña) que vas a usar para entrar a `/admin`. No hace falta
    ninguna tabla extra: el login usa Supabase Auth directamente.
@@ -66,23 +73,30 @@ npm run dev
 
 ## Funcionalidad
 
-**Vista cliente (pública, `/`)**
-- Catálogo en grilla (foto, nombre, precio, stock) leído en vivo desde Supabase
-- Selector de cantidad + "Agregar al carrito"
-- Carrito persistente en `localStorage`, panel lateral tipo "liquid glass"
-- Botón "Enviar pedido por WhatsApp" → abre `https://wa.me/5493624716035` con
-  el detalle del pedido precargado
+**Vista cliente (pública, `/`), de una sola página con navegación por anclas**
+- **Inicio**: hero + sección de valores/quiénes somos/a qué se dedican
+- **Productos**: catálogo en grilla leído en vivo desde Supabase, con filtro
+  por categoría (mates / termos / bombillas / accesorios) y búsqueda por
+  nombre
+- **Clientes**: testimonios (se ocultan solos si todavía no cargaste ninguno)
+- **Contacto**: WhatsApp e Instagram, más un botón flotante de WhatsApp
+  visible en todo el sitio para consultas rápidas sin pasar por el carrito
+- Carrito persistente en `localStorage`, panel lateral tipo "liquid glass",
+  con botón "Enviar pedido por WhatsApp" que arma el mensaje con el detalle
+  del pedido
 
 **Panel admin (`/admin`, protegido con Supabase Auth)**
-- Alta, edición y borrado de productos
+- Pestañas **Productos** y **Testimonios**
+- Alta, edición y borrado de productos (incluye categoría)
 - Subida de fotos a Supabase Storage
 - Marcar un producto como "sin stock" sin necesidad de borrarlo
+- Alta, edición y borrado de testimonios de clientes
 
 ## Logo
 
-`public/logo-mark.svg` y `public/favicon.svg` son una recreación vectorial
-del isotipo (mano + mate) para tener algo funcional desde el día uno. Si
-tenés el archivo original del logo (el que se ve en Instagram), reemplazá
-esos dos SVG por tu versión — el resto de la app (header, footer, favicon,
-loaders) los referencia por nombre de archivo, así que no hace falta tocar
-código.
+`public/logo.png` (isotipo + wordmark) y `public/logo-mark.png` (solo el
+isotipo) son el logo real, recortado y con fondo transparente a partir del
+archivo que enviaste. `public/favicon.png` sale del mismo recorte. Si en
+algún momento conseguís una versión en más alta resolución o con el fondo ya
+transparente, simplemente reemplazá esos tres archivos — el resto de la app
+los referencia por nombre, así que no hace falta tocar código.

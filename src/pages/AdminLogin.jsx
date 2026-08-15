@@ -28,19 +28,11 @@ export default function AdminLogin() {
 
   return (
     <div className="bg-wood relative flex min-h-screen items-center justify-center overflow-hidden px-5 py-12">
-      <div className="pointer-events-none absolute inset-0 bg-ink/40" />
-      <div
-        className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 bg-sage/30 blur-3xl"
-        style={{ borderRadius: '62% 38% 55% 45% / 45% 55% 45% 55%' }}
-      />
-      <div
-        className="pointer-events-none absolute -bottom-24 -right-16 h-96 w-96 bg-terracotta/30 blur-3xl"
-        style={{ borderRadius: '45% 55% 40% 60% / 55% 45% 55% 45%' }}
-      />
+      <div className="pointer-events-none absolute inset-0 bg-ink/50" />
 
       <div className="glass relative w-full max-w-sm rounded-[28px] p-8 shadow-warm-lg">
         <div className="mb-8 flex justify-center">
-          <Logo markClassName="h-14 w-14" />
+          <Logo height="h-14" />
         </div>
 
         <h1 className="mb-1 text-center font-display text-2xl">PANEL DE ADMINISTRACIÓN</h1>

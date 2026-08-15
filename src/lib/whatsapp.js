@@ -24,3 +24,10 @@ export function buildWhatsAppOrderUrl(items, total) {
   const text = encodeURIComponent(lines.join('\n'))
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`
 }
+
+export function buildWhatsAppInquiryUrl() {
+  const text = encodeURIComponent(
+    'Hola! Vi la web de Encantado Mates y quería hacerles una consulta.'
+  )
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`
+}

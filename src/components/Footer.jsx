@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="relative border-t border-ink/10 bg-ink text-cream">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-5 py-12 text-center sm:px-8">
-        <Logo markClassName="h-12 w-12 invert" className="[&_.text-olive]:text-sage" />
+        <Logo height="h-11" className="brightness-0 invert" />
 
         <p className="max-w-sm font-body text-sm text-cream/60">
           Mates artesanales torneados a mano en Resistencia, Chaco, Argentina.

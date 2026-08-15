@@ -7,7 +7,7 @@ export default function ProtectedRoute({ children }) {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-ink">
-        <img src="/logo-mark.svg" alt="" className="h-14 w-14 animate-pulse" />
+        <img src="/logo-mark.png" alt="" className="h-14 w-14 animate-pulse" />
       </div>
     )
   }
