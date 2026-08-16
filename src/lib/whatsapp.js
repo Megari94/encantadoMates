@@ -16,7 +16,7 @@ export function buildWhatsAppOrderUrl(items, total) {
     '',
     ...items.map(
       (item) =>
-        `• ${item.quantity}x ${item.name} (${item.category_name ?? item.category ?? 'Sin categoría'}) — ${formatPrice(item.price * item.quantity)}`
+        `• ${item.category_name ?? item.category ?? 'Producto'}: ${item.name} x${item.quantity} — ${formatPrice(item.price * item.quantity)}`
     ),
     '',
     `Total: ${formatPrice(total)}`,

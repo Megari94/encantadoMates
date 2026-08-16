@@ -28,7 +28,18 @@ export function CartProvider({ children }) {
       if (existing) {
         const nextQty = Math.min(existing.quantity + quantity, maxQty)
         return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: nextQty } : item
+          item.id === product.id
+            ? {
+                ...item,
+                name: product.name,
+                price: product.price,
+                image_url: product.image_url,
+                stock: product.stock,
+                category: product.category,
+                category_name: product.category_name ?? product.category,
+                quantity: nextQty,
+              }
+            : item
         )
       }
 
@@ -68,6 +79,28 @@ export function CartProvider({ children }) {
     setItems([])
   }
 
+  function syncCatalog(products, categories) {
+    const productsById = new Map(products.map((product) => [product.id, product]))
+    const categoryNames = new Map(categories.map((category) => [category.slug, category.name]))
+
+    setItems((prev) =>
+      prev.map((item) => {
+        const product = productsById.get(item.id)
+        if (!product) return item
+
+        return {
+          ...item,
+          name: product.name,
+          price: product.price,
+          image_url: product.image_url,
+          stock: product.stock,
+          category: product.category,
+          category_name: categoryNames.get(product.category) ?? product.category,
+        }
+      })
+    )
+  }
+
   const itemCount = useMemo(
     () => items.reduce((sum, item) => sum + item.quantity, 0),
     [items]
@@ -90,6 +123,7 @@ export function CartProvider({ children }) {
     updateQuantity,
     removeItem,
     clearCart,
+    syncCatalog,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

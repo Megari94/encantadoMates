@@ -2,10 +2,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { supabase, PRODUCTS_TABLE, CATEGORIES_TABLE } from '../lib/supabaseClient.js'
 import ProductCard from './ProductCard.jsx'
 import Reveal from './Reveal.jsx'
+import { useCart } from '../context/CartContext.jsx'
 
 const PAGE_SIZE = 6
 
 export default function ProductGrid() {
+  const { syncCatalog } = useCart()
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
@@ -29,6 +31,7 @@ export default function ProductGrid() {
       else {
         setProducts(data ?? [])
         setCategories(categoryData ?? [])
+        syncCatalog(data ?? [], categoryData ?? [])
       }
       setLoading(false)
     }
