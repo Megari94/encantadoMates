@@ -40,6 +40,8 @@ export function CartProvider({ children }) {
           price: product.price,
           image_url: product.image_url,
           stock: product.stock,
+          category: product.category,
+          category_name: product.category_name ?? product.category,
           quantity: Math.min(quantity, maxQty),
         },
       ]

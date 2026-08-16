@@ -10,7 +10,7 @@ export default function ProductCard({ product, categoryLabel }) {
 
   function handleAdd() {
     if (!available) return
-    addItem(product, 1)
+    addItem({ ...product, category_name: categoryLabel ?? product.category }, 1)
     setJustAdded(true)
     setTimeout(() => setJustAdded(false), 1200)
   }

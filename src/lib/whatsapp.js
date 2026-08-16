@@ -15,7 +15,8 @@ export function buildWhatsAppOrderUrl(items, total) {
     'Hola! Quiero hacer este pedido desde la web de Encantado Mates:',
     '',
     ...items.map(
-      (item) => `• ${item.quantity}x ${item.name} — ${formatPrice(item.price * item.quantity)}`
+      (item) =>
+        `• ${item.quantity}x ${item.name} (${item.category_name ?? item.category ?? 'Sin categoría'}) — ${formatPrice(item.price * item.quantity)}`
     ),
     '',
     `Total: ${formatPrice(total)}`,
